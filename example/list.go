@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/munisystem/selector"
 )
@@ -20,6 +21,13 @@ func main() {
 	index, err := selector.List(characters)
 	if err != nil {
 		log.Fatal(err)
+		os.Exit(1)
 	}
+
+	if index == -1 {
+		fmt.Println("Not selected")
+		os.Exit(0)
+	}
+
 	fmt.Println(characters[index])
 }
