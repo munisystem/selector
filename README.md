@@ -1,7 +1,7 @@
 # Selector [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 Interactive command line user interfaces like [Inquirer.js](https://github.com/SBoudrias/Inquirer.js)
 
-## Instalation
+## Installation
 
 ```bash
 $ go get github.com/munisystem/selector
