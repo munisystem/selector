@@ -11,7 +11,7 @@ $ go get github.com/munisystem/selector
 
 ### List
 
-[sample/list.go](sample/list.go)
+[example/list.go](example/list.go)
 
 ![](_gif/list.gif)
 
@@ -36,7 +36,7 @@ fmt.Println(index) //=> 1
 
 ### Checkbox
 
-[sample/checkbox.go](sample/list.go)
+[example/checkbox.go](example/list.go)
 
 ![](_gif/checkbox.gif)
 
