@@ -28,7 +28,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	for index := range indexes {
+	for _, index := range indexes {
 		fmt.Println(titles[index])
 	}
 }
