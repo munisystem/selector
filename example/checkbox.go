@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/munisystem/selector"
 )
@@ -16,19 +17,19 @@ func main() {
 		"Lostorage incited WIXOSS",
 	}
 
-	fmt.Println("What do you watch?")
-	indexes, err := selector.Checkbox(titles)
+	indexes, err := selector.Checkbox(titles, "What do you watch?")
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
 	}
 
 	if len(indexes) == 0 {
-		fmt.Println("Not selected")
 		os.Exit(0)
 	}
 
+	watched := []string{}
 	for _, index := range indexes {
-		fmt.Println(titles[index])
+		watched = append(watched, titles[index])
 	}
+	fmt.Println("I watched " + strings.Join(watched, " and ") + "!!!")
 }

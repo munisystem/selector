@@ -17,8 +17,7 @@ func main() {
 		"Iona Urazoe",
 	}
 
-	fmt.Println("Whom do you like?")
-	index, err := selector.List(characters)
+	index, err := selector.List(characters, "Whom do you like?")
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
@@ -29,5 +28,5 @@ func main() {
 		os.Exit(0)
 	}
 
-	fmt.Println(characters[index])
+	fmt.Println("I like " + characters[index] + "!!!")
 }

@@ -2,11 +2,12 @@ package selector
 
 import (
 	"fmt"
+	"strings"
 
 	tty "github.com/mattn/go-tty"
 )
 
-func Checkbox(items []string) ([]int, error) {
+func Checkbox(items []string, caption string) ([]int, error) {
 	tty, err := tty.Open()
 	if err != nil {
 		return nil, err
@@ -17,6 +18,7 @@ func Checkbox(items []string) ([]int, error) {
 	out := tty.Output()
 
 	out.Write([]byte(hideCursor))
+	out.Write([]byte(colorize(Green, "? ") + caption + "\n"))
 
 	cursor := 0
 	checkbox := make([]bool, len(items))
@@ -26,9 +28,9 @@ func Checkbox(items []string) ([]int, error) {
 
 	for {
 		for i, item := range items {
-			pointer := "   "
+			pointer := "  "
 			if cursor == i {
-				pointer = colorize(Cyan, " ❯ ")
+				pointer = colorize(Cyan, "❯ ")
 			}
 
 			checkmark := colorize(Dim, "✔ ")
@@ -62,17 +64,27 @@ func Checkbox(items []string) ([]int, error) {
 			}
 
 		case 13:
-			out.Write([]byte(eraseDisplay + showCursor))
 			var result []int
 			for i, v := range checkbox {
 				if v == true {
 					result = append(result, i)
 				}
 			}
+			out.Write([]byte(fmt.Sprintf(upCursor, 1) + colorize(Green, "? ") + caption + " " + colorize(Blue, strChain(items, result)) + "\n"))
+			out.Write([]byte(eraseDisplay + showCursor))
 			return result, nil
 		case 27:
+			out.Write([]byte(fmt.Sprintf(upCursor, 1) + colorize(Green, "? ") + caption + " " + "\n"))
 			out.Write([]byte(eraseDisplay + showCursor))
 			return nil, nil
 		}
 	}
+}
+
+func strChain(items []string, indexes []int) string {
+	tmp := []string{}
+	for index := range indexes {
+		tmp = append(tmp, items[index])
+	}
+	return strings.Join(tmp, ", ")
 }

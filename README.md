@@ -25,9 +25,10 @@ $ go run example/checkbox.go
 
 ```go
 list := []string{"alice", "bob", "carol", "dave"}
+caption := "Who are you?"
 
 // return selected element index
-index, err := selector.List(list)
+index, err := selector.List(list, caption)
 if err != nil {
     log.Fatal(err)
     os.Exit(1)
@@ -48,8 +49,10 @@ fmt.Println(index) //=> 1
 
 ```go
 list := []string{"alice", "bob", "carol", "dave"}
+caption := "Whom do you like?"
 
 // return slice into selected element indexes
+index, err := selector.List(list, caption)
 indexes, err := selector.Checkbox(list)
 if err != nil {
     log.Fatal(err)

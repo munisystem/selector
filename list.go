@@ -6,7 +6,7 @@ import (
 	tty "github.com/mattn/go-tty"
 )
 
-func List(items []string) (int, error) {
+func List(items []string, caption string) (int, error) {
 	tty, err := tty.Open()
 	if err != nil {
 		return -1, err
@@ -17,14 +17,15 @@ func List(items []string) (int, error) {
 	out := tty.Output()
 
 	out.Write([]byte(hideCursor))
+	out.Write([]byte(colorize(Green, "? ") + caption + "\n"))
 
 	cursor := 0
 
 	for {
 		for i, item := range items {
-			str := colorize(Dim, "   "+item)
+			str := colorize(Dim, "  "+item)
 			if cursor == i {
-				str = colorize(Blue, " ❯ "+item)
+				str = colorize(Blue, "❯ "+item)
 			}
 			out.Write([]byte(str + "\n"))
 		}
@@ -45,9 +46,11 @@ func List(items []string) (int, error) {
 				cursor--
 			}
 		case 13:
+			out.Write([]byte(fmt.Sprintf(upCursor, 1) + colorize(Green, "? ") + caption + " " + colorize(Blue, items[cursor]) + "\n"))
 			out.Write([]byte(eraseDisplay + showCursor))
 			return cursor, nil
 		case 27:
+			out.Write([]byte(fmt.Sprintf(upCursor, 1) + colorize(Green, "? ") + caption + " " + "\n"))
 			out.Write([]byte(eraseDisplay + showCursor))
 			return -1, nil
 		}
